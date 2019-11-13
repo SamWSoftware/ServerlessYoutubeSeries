@@ -14,8 +14,9 @@ package:
     individually: true
 
 custom:
+    tableName: player-points
     s3Sync:
-        - bucketName: myserverlessprojectuploadbucket-123123
+        - bucketName: myserverlessprojectuploadbucket-12312
           localDir: UploadData
 
 functions:
@@ -32,4 +33,15 @@ resources:
         DemoBucketUpload:
             Type: AWS::S3::Bucket
             Properties:
-                BucketName: myserverlessprojectuploadbucket-123123
+                BucketName: myserverlessprojectuploadbucket-12312
+        MyDynamoDbTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.tableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
