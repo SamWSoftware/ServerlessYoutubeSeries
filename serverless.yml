@@ -5,6 +5,13 @@ provider:
     runtime: nodejs10.x
     profile: serverlessUser
     region: eu-west-1
+    environment:
+        tableName: ${self:custom.tableName}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - dynamodb:*
+          Resource: '*'
 
 plugins:
     - serverless-s3-sync
@@ -21,10 +28,17 @@ custom:
 
 functions:
     getUser:
-        handler: lambdas/getUser.handler
+        handler: lambdas/endpoints/getUser.handler
         events:
             - http:
                   path: get-user/{ID}
+                  method: GET
+                  cors: true
+    getPlayerScore:
+        handler: lambdas/endpoints/getPlayerScore.handler
+        events:
+            - http:
+                  path: get-player-score/{ID}
                   method: GET
                   cors: true
 
