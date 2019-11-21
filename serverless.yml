@@ -7,10 +7,12 @@ provider:
     region: eu-west-1
     environment:
         tableName: ${self:custom.tableName}
+        bucketName: ${self:custom.bucketName}
     iamRoleStatements:
         - Effect: Allow
           Action:
               - dynamodb:*
+              - s3:*
           Resource: '*'
 
 plugins:
@@ -22,8 +24,9 @@ package:
 
 custom:
     tableName: player-points
+    bucketName: myserverlessprojectuploadbucket-12312
     s3Sync:
-        - bucketName: myserverlessprojectuploadbucket-12312
+        - bucketName: ${self:custom.bucketName}
           localDir: UploadData
 
 functions:
@@ -49,12 +52,27 @@ functions:
                   method: POST
                   cors: true
 
+    createFile:
+        handler: lambdas/endpoints/createFile.handler
+        events:
+            - http:
+                  path: create-file/{fileName}
+                  method: POST
+                  cors: true
+    getFile:
+        handler: lambdas/endpoints/getFile.handler
+        events:
+            - http:
+                  path: get-file/{fileName}
+                  method: GET
+                  cors: true
+
 resources:
     Resources:
         DemoBucketUpload:
             Type: AWS::S3::Bucket
             Properties:
-                BucketName: myserverlessprojectuploadbucket-12312
+                BucketName: ${self:custom.bucketName}
         MyDynamoDbTable:
             Type: AWS::DynamoDB::Table
             Properties:
