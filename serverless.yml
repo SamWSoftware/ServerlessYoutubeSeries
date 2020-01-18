@@ -5,5 +5,18 @@ provider:
     runtime: nodejs12.x
     profile: serverlessUser
     region: eu-west-1
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - sns:SetSMSAttributes
+              - sns:Publish
+          Resource: '*'
 
 functions:
+    sendSMS:
+        handler: lambdas/endpoints/sendSMS.handler
+        events:
+            - http:
+                  path: send-sms
+                  method: POST
+                  cors: true
