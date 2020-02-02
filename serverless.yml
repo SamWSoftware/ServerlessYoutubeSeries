@@ -5,5 +5,18 @@ provider:
     runtime: nodejs12.x
     profile: serverlessUser
     region: eu-west-1
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - ses:*
+          Resource: '*'
 
 functions:
+    sendReminder:
+        handler: lambdas/scheduleTasks/reminderEmail.handler
+        events:
+            - schedule: cron(0 9 ? * 7 *)
+    sendMorningNews:
+        handler: lambdas/scheduleTasks/morningNews.handler
+        events:
+            - schedule: cron(15 7 ? * * *)

@@ -4,6 +4,7 @@
     "description": "",
     "main": "webpack.config.js",
     "dependencies": {
+        "axios": "^0.19.2",
         "serverless": "^1.60.4",
         "serverless-webpack": "^5.3.1"
     },
