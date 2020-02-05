@@ -8,6 +8,7 @@
         "serverless-webpack": "^5.3.1"
     },
     "devDependencies": {
+        "serverless-s3-sync": "^1.10.2",
         "webpack": "^4.41.5"
     },
     "scripts": {
