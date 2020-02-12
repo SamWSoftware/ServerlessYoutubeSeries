@@ -19,7 +19,7 @@ exports.handler = async event => {
     });
 
     if (!user) {
-        return Responses._400({ message: 'Failed to get user by ID' });
+        return Responses._404({ message: 'Failed to get user by ID' });
     }
 
     return Responses._200({ user });
