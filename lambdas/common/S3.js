@@ -15,8 +15,8 @@ const S3 = {
             throw Error(`Failed to get file ${fileName}, from ${bucket}`);
         }
 
-        if (fileName.slice(fileName.length - 4, fileName.length) == 'json') {
-            data = data.Body.toString();
+        if (/\.json$/.test(fileName)) {
+            data = JSON.parse(data.Body.toString());
         }
         return data;
     },

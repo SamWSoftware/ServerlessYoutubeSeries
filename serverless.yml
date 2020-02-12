@@ -17,7 +17,6 @@ provider:
           Resource: '*'
 
 plugins:
-    - serverless-s3-sync
     - serverless-webpack
 
 package:
@@ -26,18 +25,8 @@ package:
 custom:
     tableName: player-points
     bucketName: myserverlessprojectuploadbucket-12312
-    s3Sync:
-        - bucketName: ${self:custom.bucketName}
-          localDir: UploadData
 
 functions:
-    getUser:
-        handler: lambdas/endpoints/getUser.handler
-        events:
-            - http:
-                  path: get-user/{ID}
-                  method: GET
-                  cors: true
     getPlayerScore:
         handler: lambdas/endpoints/getPlayerScore.handler
         events:
@@ -93,17 +82,3 @@ resources:
                     - AttributeName: ID
                       KeyType: HASH
                 BillingMode: PAY_PER_REQUEST
-        myAssumeRole:
-            Type: AWS::IAM::Role
-            Properties:
-                RoleName: myAssumeRole
-                AssumeRolePolicyDocument:
-                    Version: '2012-10-17'
-                    Statement:
-                        - Effect: Allow
-                          Principal:
-                              Service:
-                                  - lambda.amazonaws.com
-                                  - apigateway.amazonaws.com
-                          Action:
-                              - sts:AssumeRole

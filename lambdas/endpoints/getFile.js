@@ -19,8 +19,8 @@ exports.handler = async event => {
     });
 
     if (!file) {
-        return Responses._400({ message: 'Failed to read data by filename' });
+        return Responses._404({ message: 'Failed to read data by filename' });
     }
 
-    return Responses._200({ file });
+    return Responses._200(file);
 };
