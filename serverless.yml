@@ -2,7 +2,7 @@ service: myserverlessproject
 
 provider:
     name: aws
-    runtime: nodejs10.x
+    runtime: nodejs12.x
     profile: serverlessUser
     region: eu-west-1
     environment:
