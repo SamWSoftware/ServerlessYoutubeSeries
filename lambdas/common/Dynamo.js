@@ -8,6 +8,14 @@ if (process.env.IS_OFFLINE) {
     };
 }
 
+if (process.env.JEST_WORKER_ID) {
+    options = {
+        endpoint: 'http://localhost:8000',
+        region: 'local-env',
+        sslEnabled: false,
+    };
+}
+
 const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
 const Dynamo = {
