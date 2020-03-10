@@ -20,6 +20,7 @@ plugins:
     - serverless-webpack
     - serverless-offline
     - serverless-dynamodb-local
+    - serverless-plugin-scripts
 
 package:
     individually: true
@@ -36,6 +37,9 @@ custom:
             migrate: true
         migration:
             dir: offline/migrations
+    scripts:
+        hooks:
+            'aws:common:validate:validate': tableName=player-points-table jest
 
 functions:
     getPlayerScore:
