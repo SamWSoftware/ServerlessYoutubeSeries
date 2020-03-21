@@ -39,7 +39,7 @@ const Dynamo = {
 
     async write(data, TableName) {
         if (!data.ID) {
-            throw Error('no ID on the data');
+            throw Error('no ID on the data ');
         }
 
         const params = {
