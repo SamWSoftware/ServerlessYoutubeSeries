@@ -25,7 +25,7 @@ package:
     individually: true
 
 custom:
-    tableName: player-points-table
+    tableName: player-points-table-circle-ci
     bucketName: myserverlessprojectuploadbucket-123123
     dynamodb:
         stages:
