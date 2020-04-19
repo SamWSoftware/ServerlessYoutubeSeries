@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "dependencies": {
     "lambda-hooks": "^0.1.4",
-    "serverless-jest-plugin": "^0.3.0"
+    "serverless-jest-plugin": "^0.3.0",
+    "yup": "^0.28.3"
   },
   "devDependencies": {
     "aws-sdk": "^2.616.0",

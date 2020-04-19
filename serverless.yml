@@ -24,7 +24,7 @@ package:
 
 custom:
     tableName: player-points-table
-    bucketName: myserverlessprojectuploadbucket-123123
+    bucketName: myserverlessprojectuploadbucket-12312356
 
 functions:
     getPlayerScore:
