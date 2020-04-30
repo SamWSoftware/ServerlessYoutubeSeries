@@ -56,6 +56,14 @@ functions:
                   method: GET
                   cors: true
 
+    getGamesForPlayer:
+        handler: lambdas/endpoints/getGamesForPlayer.handler
+        events:
+            - http:
+                  path: get-games-for-player/{playerID}
+                  method: GET
+                  cors: true
+
     createFile:
         handler: lambdas/endpoints/createFile.handler
         events:

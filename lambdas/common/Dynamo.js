@@ -67,5 +67,16 @@ const Dynamo = {
 
         return res.Items || [];
     },
+
+    scan: async ({ tableName, filterExpression, expressionAttributes }) => {
+        const params = {
+            TableName: tableName,
+            FilterExpression: filterExpression,
+            ExpressionAttributeValues: expressionAttributes,
+        };
+        const res = await documentClient.scan(params).promise();
+
+        return res.Items || [];
+    },
 };
 module.exports = Dynamo;
