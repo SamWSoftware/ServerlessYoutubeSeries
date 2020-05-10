@@ -16,11 +16,11 @@ provider:
               - ses:*
           Resource: '*'
 
-plugins:
-    - serverless-webpack
+#plugins:
+#    - serverless-webpack
 
-package:
-    individually: true
+#package:
+#    individually: true
 
 custom:
     tableName: player-points-table

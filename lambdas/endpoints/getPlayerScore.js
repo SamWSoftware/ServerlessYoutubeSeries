@@ -1,5 +1,5 @@
 const Responses = require('../common/API_Responses');
-const Dynamo = require('../common/Dynamo');
+import Dynamo from '../common/Dynamo';
 
 const { withHooks } = require('../common/hooks');
 
