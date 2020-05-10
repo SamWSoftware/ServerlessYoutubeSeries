@@ -5,6 +5,7 @@ provider:
     runtime: nodejs12.x
     profile: serverlessUser
     region: eu-west-1
+    stage: dev
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
