@@ -37,4 +37,4 @@ const S3 = {
     },
 };
 
-module.exports = S3;
+export default S3;

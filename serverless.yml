@@ -16,11 +16,11 @@ provider:
               - ses:*
           Resource: '*'
 
-#plugins:
-#    - serverless-webpack
+plugins:
+    - serverless-webpack
 
-#package:
-#    individually: true
+package:
+    individually: true
 
 custom:
     tableName: player-points-table
@@ -61,21 +61,6 @@ functions:
         events:
             - http:
                   path: get-games-for-player/{playerID}
-                  method: GET
-                  cors: true
-
-    createFile:
-        handler: lambdas/endpoints/createFile.handler
-        events:
-            - http:
-                  path: create-file/{fileName}
-                  method: POST
-                  cors: true
-    getFile:
-        handler: lambdas/endpoints/getFile.handler
-        events:
-            - http:
-                  path: get-file/{fileName}
                   method: GET
                   cors: true
 

@@ -1,4 +1,4 @@
-const Responses = require('../common/API_Responses');
+import Responses from '../common/API_Responses';
 const AWS = require('aws-sdk');
 
 const SES = new AWS.SES();

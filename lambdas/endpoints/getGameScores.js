@@ -1,11 +1,9 @@
-const Responses = require('../common/API_Responses');
-const Dynamo = require('../common/Dynamo');
-
-const { withHooks } = require('../common/hooks');
+import Responses from '../common/API_Responses';
+import Dynamo from '../common/Dynamo';
 
 const tableName = process.env.tableName;
 
-const handler = async event => {
+exports.handler = async event => {
     if (!event.pathParameters.game) {
         // failed without a game
         return Responses._400({ message: 'missing the game from the path' });
@@ -22,5 +20,3 @@ const handler = async event => {
 
     return Responses._200(gamePlayers);
 };
-
-exports.handler = withHooks(handler);

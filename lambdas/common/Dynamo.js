@@ -79,4 +79,4 @@ const Dynamo = {
         return res.Items || [];
     },
 };
-module.exports = Dynamo;
+export default Dynamo;
