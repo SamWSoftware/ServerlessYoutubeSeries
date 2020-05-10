@@ -11,7 +11,9 @@
   "devDependencies": {
     "aws-sdk": "^2.616.0",
     "serverless": "^1.63.0",
+    "serverless-step-functions": "^2.19.0",
     "serverless-webpack": "^5.3.1",
+    "uuid": "^8.0.0",
     "webpack": "^4.41.6"
   },
   "scripts": {

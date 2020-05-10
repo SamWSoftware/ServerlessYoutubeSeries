@@ -9,6 +9,7 @@ provider:
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
+        signupTableName: ${self:custom.signupTableName}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -19,13 +20,27 @@ provider:
 
 plugins:
     - serverless-webpack
+    - serverless-step-functions
 
 package:
     individually: true
 
 custom:
     tableName: player-points-table
+    signupTableName: signup-table-name
     bucketName: myserverlessprojectuploadbucket-12312356
+
+stepFunctions:
+    validate: true
+    stateMachines:
+        reminderEmail:
+            name: reminderEmail
+            events:
+                - http:
+                      path: signup-with-reminders
+                      method: POST
+                      cors: true
+            definition: ${file(./stepFunction.yml)}
 
 functions:
     getPlayerScore:
@@ -73,6 +88,13 @@ functions:
                   method: POST
                   cors: true
 
+    addSignup:
+        handler: lambdas/stepFunctionLambdas/addSignup.handler
+    getSignup:
+        handler: lambdas/stepFunctionLambdas/getSignup.handler
+    sendReminderEmail:
+        handler: lambdas/stepFunctionLambdas/sendReminderEmail.handler
+
 resources:
     Resources:
         DemoBucketUpload:
@@ -100,3 +122,15 @@ resources:
                             KeyType: HASH
                       Projection:
                           ProjectionType: ALL
+
+        MyEmailSignupTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.signupTableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
