@@ -9,6 +9,7 @@ provider:
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
+        tokenTableName: ${self:custom.tokenTableName}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -25,9 +26,13 @@ package:
 
 custom:
     tableName: player-points-table
+    tokenTableName: token-table-name
     bucketName: myserverlessprojectuploadbucket-12312356
 
 functions:
+    authoriserAnyToken:
+        handler: lambdas/authorisers/anyToken.handler
+
     getPlayerScore:
         handler: lambdas/endpoints/getPlayerScore.handler
         events:
@@ -35,6 +40,10 @@ functions:
                   path: get-player-score/{ID}
                   method: GET
                   cors: true
+                  authorizer:
+                      name: authoriserAnyToken
+                      type: request
+                      identitySource: method.request.header.X-Amz-Security-Token
     createPlayerScore:
         handler: lambdas/endpoints/createPlayerScore.handler
         events:
@@ -42,6 +51,10 @@ functions:
                   path: create-player-score/{ID}
                   method: POST
                   cors: true
+                  authorizer:
+                      name: authoriserAnyToken
+                      type: request
+                      identitySource: method.request.header.X-Amz-Security-Token
     updatePlayerScore:
         handler: lambdas/endpoints/updatePlayerScore.handler
         events:
@@ -100,3 +113,16 @@ resources:
                             KeyType: HASH
                       Projection:
                           ProjectionType: ALL
+
+        TokenTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.tokenTableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
