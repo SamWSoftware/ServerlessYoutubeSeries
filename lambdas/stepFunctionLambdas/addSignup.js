@@ -7,9 +7,10 @@ exports.handler = async event => {
     console.log('event', event);
 
     const email = event.Input.signup.email;
+
     const ID = uuid();
 
-    await Dynamo.write({ ID, email, played: 'false' }, tableName);
+    await Dynamo.write({ email, ID, played: 'false' }, tableName);
 
     return { ID };
 };
