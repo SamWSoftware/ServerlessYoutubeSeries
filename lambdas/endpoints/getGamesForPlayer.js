@@ -29,6 +29,9 @@ exports.handler = async event => {
         tableName,
         filterExpression,
         expressionAttributes,
+    }).catch(err => {
+        console.log('error in Dynamo get', err);
+        return null;
     });
 
     return Responses._200(games);

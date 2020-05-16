@@ -8,7 +8,10 @@ exports.handler = async event => {
     const user = event.body;
     user.ID = ID;
 
-    const newUser = await Dynamo.write(user, tableName);
+    const newUser = await Dynamo.write(user, tableName).catch(err => {
+        console.log('error in Dynamo get', err);
+        return null;
+    });
 
     if (!newUser) {
         return Responses._400({ message: 'Failed to write user by ID' });

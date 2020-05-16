@@ -16,6 +16,9 @@ exports.handler = async event => {
         index: 'game-index',
         queryKey: 'game',
         queryValue: game,
+    }).catch(err => {
+        console.log('error in Dynamo get', err);
+        return null;
     });
 
     return Responses._200(gamePlayers);
