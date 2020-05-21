@@ -15,6 +15,7 @@ provider:
               - dynamodb:*
               - s3:*
               - ses:*
+              - lex:*
           Resource: '*'
 
 plugins:
@@ -70,6 +71,13 @@ functions:
         events:
             - http:
                   path: send-email
+                  method: POST
+                  cors: true
+    telegramToLex:
+        handler: lambdas/endpoints/telegramToLex.handler
+        events:
+            - http:
+                  path: telegram-webhook
                   method: POST
                   cors: true
 
