@@ -4,7 +4,9 @@
     "description": "",
     "main": "webpack.config.js",
     "dependencies": {
-        "serverless-jest-plugin": "^0.3.0"
+        "file-type": "^14.6.2",
+        "serverless-jest-plugin": "^0.3.0",
+        "uuid": "^8.1.0"
     },
     "devDependencies": {
         "aws-sdk": "^2.616.0",

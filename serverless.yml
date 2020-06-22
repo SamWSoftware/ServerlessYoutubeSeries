@@ -9,6 +9,8 @@ provider:
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
+        imageUploadBucket: ${self:custom.imageUploadBucket}
+        region: ${self:provider.region}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -26,6 +28,7 @@ package:
 custom:
     tableName: player-points-table
     bucketName: myserverlessprojectuploadbucket-12312356
+    imageUploadBucket: my-image-upload-bucket-demo-sws
 
 functions:
     getPlayerScore:
@@ -73,12 +76,25 @@ functions:
                   method: POST
                   cors: true
 
+    imageUpload:
+        handler: lambdas/endpoints/imageUpload.handler
+        events:
+            - http:
+                  path: image-upload
+                  method: POST
+                  cors: true
+
 resources:
     Resources:
         DemoBucketUpload:
             Type: AWS::S3::Bucket
             Properties:
                 BucketName: ${self:custom.bucketName}
+        ImageUploadBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:custom.imageUploadBucket}
+                AccessControl: PublicRead
         MyDynamoDbTable:
             Type: AWS::DynamoDB::Table
             Properties:
