@@ -83,6 +83,15 @@ functions:
                   path: image-upload
                   method: POST
                   cors: true
+    imageResize:
+        handler: lambdas/endpoints/imageResize.handler
+        events:
+            - s3:
+                  bucket: ${self:custom.imageUploadBucket}
+                  event: s3:ObjectCreated:*
+                  rules:
+                      - prefix: uploads/
+                  existing: true
 
 resources:
     Resources:

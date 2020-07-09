@@ -5,6 +5,7 @@
     "main": "webpack.config.js",
     "dependencies": {
         "file-type": "^14.6.2",
+        "jimp": "^0.14.0",
         "serverless-jest-plugin": "^0.3.0",
         "uuid": "^8.1.0"
     },
