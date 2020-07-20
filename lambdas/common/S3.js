@@ -38,6 +38,14 @@ const S3 = {
 
         return newData;
     },
+
+    async getSignedURL(bucket, fileName, expriySeconds) {
+        return s3Client.getSignedUrl('getObject', {
+            Bucket: bucket,
+            Key: fileName,
+            Expires: expriySeconds,
+        });
+    },
 };
 
 export default S3;
