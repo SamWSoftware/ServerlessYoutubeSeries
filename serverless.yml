@@ -9,6 +9,18 @@ provider:
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
+        apiURLBase:
+            {
+                'Fn::Join':
+                    [
+                        '',
+                        [
+                            'https://',
+                            { 'Ref': 'ApiGatewayRestApi' },
+                            '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}',
+                        ],
+                    ],
+            }
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -24,8 +36,8 @@ package:
     individually: true
 
 custom:
-    tableName: player-points-table
-    bucketName: myserverlessprojectuploadbucket-12312356
+    tableName: player-points-tbl
+    bucketName: myserverlessprojectuploadbucket-123123fff
 
 functions:
     getPlayerScore:
