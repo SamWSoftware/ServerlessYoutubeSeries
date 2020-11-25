@@ -19,13 +19,23 @@ provider:
 
 plugins:
     - serverless-webpack
+    - serverless-offline
+    - serverless-dynamodb-local
 
 package:
     individually: true
 
 custom:
-    tableName: player-points-table
-    bucketName: myserverlessprojectuploadbucket-12312356
+    tableName: player-points
+    bucketName: myserverlessprojectuploadbucket
+
+    dynamodb:
+        stages:
+            - dev
+        start:
+            port: 8000
+            inMemory: true
+            migrate: true
 
 functions:
     getPlayerScore:

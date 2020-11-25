@@ -4,13 +4,16 @@
     "description": "",
     "main": "webpack.config.js",
     "dependencies": {
-        "serverless-jest-plugin": "^0.3.0"
+        "serverless-jest-plugin": "^0.3.0",
+        "serverless-offline": "^6.8.0"
     },
     "devDependencies": {
         "aws-sdk": "^2.616.0",
         "serverless": "^1.74.1",
+        "serverless-dynamodb-local": "^0.2.39",
         "serverless-webpack": "^5.3.1",
-        "webpack": "^4.41.6"
+        "webpack": "^4.41.6",
+        "webpack-node-externals": "^2.5.2"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"

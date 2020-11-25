@@ -5,7 +5,7 @@ const tableName = process.env.tableName;
 
 exports.handler = async event => {
     let ID = event.pathParameters.ID;
-    const user = event.body;
+    const user = JSON.parse(event.body);
     user.ID = ID;
 
     const newUser = await Dynamo.write(user, tableName).catch(err => {
