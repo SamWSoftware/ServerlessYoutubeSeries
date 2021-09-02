@@ -3,8 +3,8 @@ service: myserverlessproject3
 provider:
     name: aws
     runtime: nodejs12.x
-    profile: serverlessUser
-    region: eu-west-1
+#    profile: serverlessUser
+    region: us-east-1
     environment:
         tableName: ${self:custom.tableName}
         bucketName: ${self:custom.bucketName}
@@ -26,7 +26,7 @@ package:
 
 custom:
     tableName: player-points-table
-    bucketName: myserverlessprojectuploadbucket-123123
+    bucketName: notes-api-prod-serverlessdeploymentbucket-1dedyda5s1idw
     dynamodb:
         stages:
             - dev
@@ -78,10 +78,10 @@ functions:
 
 resources:
     Resources:
-        DemoBucketUpload:
-            Type: AWS::S3::Bucket
-            Properties:
-                BucketName: ${self:custom.bucketName}
+#        DemoBucketUpload:
+#            Type: AWS::S3::Bucket
+#            Properties:
+#                BucketName: ${self:custom.bucketName}
         MyDynamoDbTable:
             Type: AWS::DynamoDB::Table
             Properties:
