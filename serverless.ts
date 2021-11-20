@@ -8,30 +8,55 @@ const serverlessConfiguration: AWS = {
             webpackConfig: './webpack.config.js',
             includeModules: true,
         },
+        bucketName: 'my-certificate-templates-${self:provider.stage}',
     },
     // Add the serverless-webpack plugin
     plugins: ['serverless-webpack'],
     provider: {
         name: 'aws',
         runtime: 'nodejs12.x',
+
+        region: 'eu-west-1',
+        profile: 'serverlessUser-sws',
+
         apiGateway: {
             minimumCompressionSize: 1024,
+            binaryMediaTypes: ['*/*'],
         },
         environment: {
             AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+            bucketName: '${self:custom.bucketName}',
         },
+        iamRoleStatements: [
+            {
+                Effect: 'Allow',
+                Action: 's3:*',
+                Resource: '*',
+            },
+        ],
     },
     functions: {
-        hello: {
-            handler: 'handler.hello',
+        createCertificate: {
+            handler: 'src/function/createCertificate/index.handler',
             events: [
                 {
                     http: {
-                        method: 'get',
-                        path: 'hello',
+                        method: 'post',
+                        path: 'certificate',
                     },
                 },
             ],
+        },
+    },
+
+    resources: {
+        Resources: {
+            templateBucket: {
+                Type: 'AWS::S3::Bucket',
+                Properties: {
+                    BucketName: '${self:custom.bucketName}',
+                },
+            },
         },
     },
 };
