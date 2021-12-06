@@ -1,25 +1,53 @@
-service: myserverlessproject
+service: myserverlessproject2
 
 provider:
-  name: aws
-  runtime: nodejs10.x
-  profile: serverlessUser
-
-plugins:
-  - serverless-s3-sync
+    name: aws
+    runtime: nodejs12.x
+    profile: serverlessUser
+    region: eu-west-1
+    environment:
+        tableName: ${self:custom.tableName}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - dynamodb:*
+          Resource: '*'
 
 custom:
-  s3Sync:
-    - bucketName: myserverlessprojectuploadbucket-123123
-      localDir: UploadData
+    tableName: WebsocketUsers
 
 functions:
-  hello:
-    handler: handler.hello
+    websocket-connect:
+        handler: lambdas/websockets/connect.handler
+        events:
+            - websocket:
+                  route: $connect
+    websocket-disconnect:
+        handler: lambdas/websockets/disconnect.handler
+        events:
+            - websocket:
+                  route: $disconnect
+    websocket-default:
+        handler: lambdas/websockets/default.handler
+        events:
+            - websocket:
+                  route: $default
+    websocket-message:
+        handler: lambdas/websockets/message.handler
+        events:
+            - websocket:
+                  route: message
 
 resources:
-  Resources:
-    DemoBucketUpload:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: myserverlessprojectuploadbucket-123123
+    Resources:
+        WeboscketUserTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.tableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
